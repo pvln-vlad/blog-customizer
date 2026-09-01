@@ -26,14 +26,14 @@ type ArticleParamsFormProps = {
 };
 
 export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const [formState, setFormState] = useState(defaultArticleState);
 
 	const handleToggle = (): void => {
-		if (isOpen) {
-			setIsOpen(false);
+		if (isSidebarOpen) {
+			setIsSidebarOpen(false);
 		} else {
-			setIsOpen(true);
+			setIsSidebarOpen(true);
 		}
 	};
 
@@ -48,13 +48,19 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	};
 
 	const rootRef = useRef<HTMLDivElement>(null);
-	useOutsideClickClose({ isOpen, rootRef, onChange: setIsOpen });
+	useOutsideClickClose({
+		isOpen: isSidebarOpen,
+		rootRef,
+		onChange: setIsSidebarOpen,
+	});
 
 	return (
 		<>
-			<ArrowButton isOpen={isOpen} onClick={handleToggle} />
+			<ArrowButton isOpen={isSidebarOpen} onClick={handleToggle} />
 			<aside
-				className={clsx(styles.container, { [styles.container_open]: isOpen })}
+				className={clsx(styles.container, {
+					[styles.container_open]: isSidebarOpen,
+				})}
 				ref={rootRef}>
 				<form
 					className={styles.form}
